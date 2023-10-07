@@ -97,7 +97,6 @@ services:
   
   upf:
     container_name: upf
-    #image: shynuu/sa-ntn:upf
     image: upf:v3.1.1
     command: bash ./upf-iptables.sh
     #command: bash -c "./upf-iptables.sh && ./free5gc-upfd -c ./upfcfg.yaml"
@@ -236,81 +235,7 @@ services:
     depends_on:
       #- db
       - nrf
-
-  # geo:
-  #   container_name: geo
-  #   image: shynuu/sa-ntn:trunks
-  #   entrypoint: bash ./entrypoint.sh
-  #   volumes:
-  #     - /home/vagrant/nr-ntn/free5gc/config1/trunks-0.yaml:/trunks/trunks.yaml
-  #     - /home/vagrant/nr-ntn/free5gc/config1/trunks-0.sh:/trunks/entrypoint.sh
-  #   cap_add:
-  #     - NET_ADMIN
-  #   environment:
-  #     GIN_MODE: release
-  #   networks:
-  #     satterminal-network:
-  #       ipv4_address: 192.168.30.3
-  #     satgateway-network:
-  #       ipv4_address: 192.168.35.3
-  #   depends_on:
-  #     - nrf
-  #     - amf
-  #     - upf
-  #     - smf
-  #     - pcf
-  #     - ausf
-  #     - gnb
   
-  # meo:
-  #   container_name: meo
-  #   image: shynuu/sa-ntn:trunks
-  #   entrypoint: bash ./entrypoint.sh
-  #   volumes:
-  #     - /home/vagrant/nr-ntn/free5gc/config1/trunks-0.yaml:/trunks/trunks.yaml
-  #     - /home/vagrant/nr-ntn/free5gc/config1/trunks-0.sh:/trunks/entrypoint.sh
-  #   cap_add:
-  #     - NET_ADMIN
-  #   environment:
-  #     GIN_MODE: release
-  #   networks:
-  #     satterminal-network:
-  #       ipv4_address: 192.168.30.3
-  #     satgateway-network:
-  #       ipv4_address: 192.168.35.3
-  #   depends_on:
-  #     - nrf
-  #     - amf
-  #     - upf
-  #     - smf
-  #     - pcf
-  #     - ausf
-  #     - gnb
-
-  # leo:
-  #   container_name: leo
-  #   image: shynuu/sa-ntn:trunks
-  #   entrypoint: bash ./entrypoint.sh
-  #   volumes:
-  #     - /home/vagrant/nr-ntn/free5gc/config1/trunks-0.yaml:/trunks/trunks.yaml
-  #     - /home/vagrant/nr-ntn/free5gc/config1/trunks-0.sh:/trunks/entrypoint.sh
-  #   cap_add:
-  #     - NET_ADMIN
-  #   environment:
-  #     GIN_MODE: release
-  #   networks:
-  #     satterminal-network:
-  #       ipv4_address: 192.168.30.3
-  #     satgateway-network:
-  #       ipv4_address: 192.168.35.3
-  #   depends_on:
-  #     - nrf
-  #     - amf
-  #     - upf
-  #     - smf
-  #     - pcf
-  #     - ausf
-  #     - gnb
 
   # n3iwf:
   #   container_name: n3iwf
@@ -334,7 +259,6 @@ services:
   gnb:
     container_name: gnb
     image: gnb:master
-    #image: shynuu/sa-ntn:gnb
     #entrypoint: ./nr-gnb -c ./gnbcfg.yaml
     command: --config gnbcfg.yaml
     #entrypoint: bash ./entrypoint.sh
@@ -369,7 +293,6 @@ services:
   ue:
     container_name: ue
     image: ue:master
-    #image: shynuu/sa-ntn:ue
     #command: ./nr-ue -c ./uecfg.yaml
     command: --config uecfg.yaml
     #command: --config ue.yaml
