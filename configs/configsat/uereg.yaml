@@ -1,0 +1,38 @@
+# Mongo Configuration
+mongo:
+  name: free5gc
+  url: mongodb://192.168.0.3:27017
+
+# Mobile Country Code value of HPLMN
+mcc: '208'
+# Mobile Network Code value of HPLMN (2 or 3 digits)
+mnc: '93'
+# Permanent subscription key
+key: 8baf473f2f8fd09487cccbd7097c6862
+# Operator code (OP or OPC) of the UE
+op: 8e27b6af0e692e750f32667a3b14605d
+# Sequence number
+sqn: 16f3b3f70fc2
+# Authentication Management Field
+amf: 8000
+
+# List all the slices
+slices:
+  - sst: 1
+    sd: '010203'
+    varqi: 9
+    dnn: internet
+  - sst: 1
+    sd: '112233'
+    varqi: 9
+    dnn: internet2
+    # PDU Sessions Type for this slice
+    # possible values are: "IPV4", "IPV6", "IPV4V6", "UNSTRUCTURED", "ETHERNET"
+    # when omitted, results in "IPV4"
+    #pdu-session-type: "IPV4V6" 
+
+# All IMSI of UEs
+imsi:
+  - imsi-208930000000001
+  - imsi-208930000000002
+  - imsi-208930000000003

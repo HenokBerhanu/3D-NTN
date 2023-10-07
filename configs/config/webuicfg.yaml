@@ -1,0 +1,13 @@
+info:
+  version: 1.0.1
+  description: WebUI initial local configuration
+
+configuration:
+  mongodb: # the mongodb connected by this webui
+    name: free5gc # name of the mongodb
+    url: mongodb://192.168.0.3:27017 # a valid URL of the mongodb
+
+logger: # log output setting
+  enable: true # true or false
+  level: info # how detailed to output, value: trace, debug, info, warn, error, fatal, panic
+  reportCaller: false # enable the caller report or not, value: true or false

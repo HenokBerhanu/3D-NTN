@@ -1,0 +1,55 @@
+PING google.com (142.251.209.14) 56(84) bytes of data.
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=1 ttl=61 time=27.5 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=2 ttl=61 time=32.7 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=3 ttl=61 time=23.8 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=4 ttl=61 time=27.7 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=5 ttl=61 time=26.3 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=6 ttl=61 time=31.0 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=7 ttl=61 time=26.3 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=8 ttl=61 time=25.3 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=9 ttl=61 time=23.8 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=10 ttl=61 time=26.7 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=11 ttl=61 time=27.1 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=12 ttl=61 time=27.0 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=13 ttl=61 time=25.0 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=14 ttl=61 time=25.3 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=15 ttl=61 time=25.2 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=16 ttl=61 time=26.7 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=17 ttl=61 time=26.2 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=18 ttl=61 time=22.8 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=19 ttl=61 time=25.4 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=20 ttl=61 time=24.5 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=21 ttl=61 time=28.1 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=22 ttl=61 time=25.4 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=23 ttl=61 time=26.9 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=24 ttl=61 time=24.0 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=25 ttl=61 time=24.1 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=26 ttl=61 time=27.2 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=27 ttl=61 time=26.6 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=28 ttl=61 time=27.1 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=29 ttl=61 time=32.9 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=30 ttl=61 time=24.1 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=31 ttl=61 time=30.8 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=32 ttl=61 time=27.2 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=33 ttl=61 time=25.2 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=34 ttl=61 time=33.6 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=35 ttl=61 time=33.3 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=36 ttl=61 time=35.6 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=37 ttl=61 time=26.2 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=38 ttl=61 time=30.7 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=39 ttl=61 time=31.3 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=40 ttl=61 time=32.7 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=41 ttl=61 time=27.1 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=42 ttl=61 time=31.3 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=43 ttl=61 time=30.6 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=44 ttl=61 time=29.3 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=45 ttl=61 time=30.9 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=46 ttl=61 time=28.3 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=47 ttl=61 time=31.9 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=48 ttl=61 time=37.0 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=49 ttl=61 time=31.6 ms
+64 bytes from mil04s50-in-f14.1e100.net (142.251.209.14): icmp_seq=50 ttl=61 time=28.7 ms
+
+--- google.com ping statistics ---
+50 packets transmitted, 50 received, 0% packet loss, time 49170ms
+rtt min/avg/max/mdev = 22.771/28.123/37.024/3.334 ms

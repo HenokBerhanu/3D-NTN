@@ -1,0 +1,490 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: mongodb
+    image: mongo:4.4.14
+    #image: mongo:latest
+    command: mongod --port 27017
+    expose:
+      - "27017"
+    volumes:
+      - dbdata:/data/db
+    networks:
+      sbi:
+        ipv4_address: 192.168.0.3
+
+  nrf:
+    container_name: nrf
+    image: nrf:v3.1.1
+    #image: free5gc/nrf:v3.3.0
+    #command: ./nrf -c ./nrfcfg.yaml
+    command: --config nrfcfg.yaml
+    # expose:
+    #   - "8000"
+    volumes:
+      - ./free5gc/config1/nrfcfg.yaml:/free5gc/nrfcfg.yaml
+      #- /home/vagrant/nr-ntn/free5gc/config1/nrfcfg.yaml:/free5gc/config/nrfcfg.yaml
+    environment:
+      #DB_URI: mongodb://db/free5gc
+      GIN_MODE: release
+    networks:
+      sbi:
+        ipv4_address: 192.168.0.4
+    depends_on:
+      - db
+
+  # webui:
+  #   container_name: webui
+  #   image: webui:v3.3.0
+  #   command: /free5gc/webui -c /free5gc/config/webuicfg.yaml
+  #   volumes:
+  #     - /home/vagrant/nr-ntn/free5gc/config/webuicfg.yaml:/free5gc/config/webuicfg.yaml
+  #   environment:
+  #     - GIN_MODE=release
+  #   networks:
+  #     sbi:
+  #       ipv4_address: 192.168.0.13
+  #   ports:
+  #     - "5000:5000"
+  #   depends_on:
+  #     - db
+
+  amf:
+    container_name: amf
+    image: amf:v3.1.1
+    #command: ./amf -c ./amfcfg.yaml
+    command: --config amfcfg.yaml
+    #entrypoint: bash ./entrypoint.sh
+    # expose:
+    #   - "8000"
+    volumes:
+      - ./free5gc/config1/amfcfg.yaml:/free5gc/amfcfg.yaml
+      #- ./free5gc/config1/amfcfg.yaml:/amf/amfcfg.yaml
+      #- ./free5gc/config1/amf.sh:/amf/entrypoint.sh
+      #- /home/vagrant/nr-ntn/free5gc/config1/amfcfg.yaml:/free5gc/config/amfcfg.yaml
+    cap_add:
+      - NET_ADMIN
+    environment:
+      GIN_MODE: release
+    networks:
+      sbi:
+        ipv4_address: 192.168.0.5
+      n123-terrestrial:
+        ipv4_address: 192.168.15.6
+      # n123-core-sat:
+      #   ipv4_address: 192.168.40.6
+      # satgateway-network:
+      #   ipv4_address: 192.168.35.6
+    depends_on:
+      - nrf
+
+  uereg:
+    container_name: uereg
+    image: uereg:latest
+    command: --config populatecfg.yaml
+    volumes:
+      - ./free5gc/config1/uereg.yaml:/populate/populatecfg.yaml
+    environment:
+      GIN_MODE: release
+    networks:
+      sbi:
+        ipv4_address: 192.168.0.13
+    depends_on:
+      - db
+      - amf
+      - nrf
+  
+  upf:
+    container_name: upf
+    #image: shynuu/sa-ntn:upf
+    image: upf:v3.1.1
+    command: bash ./upf-iptables.sh
+    #command: bash -c "./upf-iptables.sh && ./free5gc-upfd -c ./upfcfg.yaml"
+    volumes:
+      - ./free5gc/config1/upfcfg.yaml:/free5gc/upfcfg.yaml
+      - ./free5gc/config1/upf-iptables.sh:/free5gc/upf-iptables.sh
+      # - ./free5gc/config1/upfcfg.yaml:/upf/upfcfg.yaml
+      # - ./free5gc/config1/upf-iptables.sh:/upf/entrypoint.sh
+      # - /home/vagrant/nr-ntn/results:/upf/results
+    cap_add:
+      - NET_ADMIN
+    networks:
+        # sbi:
+        #   ipv4_address: 192.168.0.14
+      pfcp:
+        ipv4_address: 192.168.5.4 #eth1
+      n123-terrestrial:
+        ipv4_address: 192.168.15.5 #eth0
+        # n123-core-sat:
+        #   ipv4_address: 192.168.40.4
+        # satgateway-network:
+        #   ipv4_address: 192.168.35.4
+        # data-networkN6:
+        #   ipv4_address: 192.168.10.3
+
+  smf:
+    container_name: smf
+    image: smf:v3.1.1
+    #image: free5gc/smf:v3.3.0
+    #command: ./smf -c ./smfcfg.yaml -u ./uerouting.yaml
+    command: --config smfcfg.yaml --uerouting uerouting.yaml
+    # expose:
+    #   - "8000"
+    volumes:
+      - ./free5gc/config1/smfcfg.yaml:/free5gc/smfcfg.yaml
+      - ./free5gc/config1/uerouting.yaml:/free5gc/uerouting.yaml
+    cap_add:
+      - NET_ADMIN
+    # environment:
+    #   GIN_MODE: release
+    networks:
+      sbi:
+        ipv4_address: 192.168.0.9
+      pfcp:
+        ipv4_address: 192.168.5.3
+    depends_on:
+      - nrf
+      - upf
+
+  ausf:
+    container_name: ausf
+    image: ausf:v3.1.1
+    #command: ./ausf -c ./ausfcfg.yaml
+    command: --config ausfcfg.yaml
+    # expose:
+    #   - "8000"
+    volumes:
+      - ./free5gc/config1/ausfcfg.yaml:/free5gc/ausfcfg.yaml
+    environment:
+      GIN_MODE: release
+    networks:
+      sbi:
+        ipv4_address: 192.168.0.6
+    depends_on:
+      - nrf
+
+  nssf:
+    container_name: nssf
+    image: nssf:v3.1.1
+    #command: ./nssf -c ./nssfcfg.yaml
+    command: --config nssfcfg.yaml
+    # expose:
+    #   - "8000"
+    volumes:
+      - ./free5gc/config1/nssfcfg.yaml:/free5gc/nssfcfg.yaml
+    environment:
+      GIN_MODE: release
+    networks:
+      sbi:
+        ipv4_address: 192.168.0.7
+    depends_on:
+      - nrf
+
+  pcf:
+    container_name: pcf
+    image: pcf:v3.1.1
+    #command: ./pcf -c ./pcfcfg.yaml
+    command: --config pcfcfg.yaml
+    # expose:
+    #   - "8000"
+    volumes:
+      - ./free5gc/config1/pcfcfg.yaml:/free5gc/pcfcfg.yaml
+    cap_add:
+      - NET_ADMIN
+    environment:
+      GIN_MODE: release
+    networks:
+      sbi:
+        ipv4_address: 192.168.0.8
+    depends_on:
+      - nrf
+
+  udm:
+    container_name: udm
+    image: udm:v3.1.1
+    #command: ./udm -c ./udmcfg.yaml
+    command: --config udmcfg.yaml
+    # expose:
+    #   - "8000"
+    volumes:
+      - ./free5gc/config1/udmcfg.yaml:/free5gc/udmcfg.yaml
+    environment:
+      GIN_MODE: release
+    networks:
+      sbi:
+        ipv4_address: 192.168.0.10
+    depends_on:
+      #- db
+      - nrf
+
+  udr:
+    container_name: udr
+    image: udr:v3.1.1
+    #command: ./udr -c ./udrcfg.yaml
+    command: --config udrcfg.yaml
+    # expose:
+    #   - "8000"
+    volumes:
+      - ./free5gc/config1/udrcfg.yaml:/free5gc/udrcfg.yaml
+    environment:
+      #DB_URI: mongodb://db/free5gc
+      GIN_MODE: release
+    networks:
+      sbi:
+        ipv4_address: 192.168.0.11
+    depends_on:
+      #- db
+      - nrf
+
+  # geo:
+  #   container_name: geo
+  #   image: shynuu/sa-ntn:trunks
+  #   entrypoint: bash ./entrypoint.sh
+  #   volumes:
+  #     - /home/vagrant/nr-ntn/free5gc/config1/trunks-0.yaml:/trunks/trunks.yaml
+  #     - /home/vagrant/nr-ntn/free5gc/config1/trunks-0.sh:/trunks/entrypoint.sh
+  #   cap_add:
+  #     - NET_ADMIN
+  #   environment:
+  #     GIN_MODE: release
+  #   networks:
+  #     satterminal-network:
+  #       ipv4_address: 192.168.30.3
+  #     satgateway-network:
+  #       ipv4_address: 192.168.35.3
+  #   depends_on:
+  #     - nrf
+  #     - amf
+  #     - upf
+  #     - smf
+  #     - pcf
+  #     - ausf
+  #     - gnb
+  
+  # meo:
+  #   container_name: meo
+  #   image: shynuu/sa-ntn:trunks
+  #   entrypoint: bash ./entrypoint.sh
+  #   volumes:
+  #     - /home/vagrant/nr-ntn/free5gc/config1/trunks-0.yaml:/trunks/trunks.yaml
+  #     - /home/vagrant/nr-ntn/free5gc/config1/trunks-0.sh:/trunks/entrypoint.sh
+  #   cap_add:
+  #     - NET_ADMIN
+  #   environment:
+  #     GIN_MODE: release
+  #   networks:
+  #     satterminal-network:
+  #       ipv4_address: 192.168.30.3
+  #     satgateway-network:
+  #       ipv4_address: 192.168.35.3
+  #   depends_on:
+  #     - nrf
+  #     - amf
+  #     - upf
+  #     - smf
+  #     - pcf
+  #     - ausf
+  #     - gnb
+
+  # leo:
+  #   container_name: leo
+  #   image: shynuu/sa-ntn:trunks
+  #   entrypoint: bash ./entrypoint.sh
+  #   volumes:
+  #     - /home/vagrant/nr-ntn/free5gc/config1/trunks-0.yaml:/trunks/trunks.yaml
+  #     - /home/vagrant/nr-ntn/free5gc/config1/trunks-0.sh:/trunks/entrypoint.sh
+  #   cap_add:
+  #     - NET_ADMIN
+  #   environment:
+  #     GIN_MODE: release
+  #   networks:
+  #     satterminal-network:
+  #       ipv4_address: 192.168.30.3
+  #     satgateway-network:
+  #       ipv4_address: 192.168.35.3
+  #   depends_on:
+  #     - nrf
+  #     - amf
+  #     - upf
+  #     - smf
+  #     - pcf
+  #     - ausf
+  #     - gnb
+
+  # n3iwf:
+  #   container_name: n3iwf
+  #   image: n3iwf:v3.3.0
+  #   command: sh -c "./n3iwf-ipsec.sh && ./n3iwf -c ./config/n3iwfcfg.yaml"
+  #   volumes:
+  #     - ./free5gc/config/n3iwfcfg.yaml:/free5gc/config/n3iwfcfg.yaml
+  #     - ./free5gc/config/n3iwf-ipsec.sh:/free5gc/n3iwf-ipsec.sh
+  #   environment:
+  #     GIN_MODE: release
+  #   cap_add:
+  #     - NET_ADMIN
+  #   networks:
+  #     sbi:
+  #       ipv4_address: 192.168.0.12
+  #   depends_on:
+  #     - amf
+  #     - smf
+  #     - upf
+  
+  gnb:
+    container_name: gnb
+    image: gnb:master
+    #image: shynuu/sa-ntn:gnb
+    #entrypoint: ./nr-gnb -c ./gnbcfg.yaml
+    command: --config gnbcfg.yaml
+    #entrypoint: bash ./entrypoint.sh
+    volumes:
+      - ./free5gc/config1/gnbcfg.yaml:/gnb/gnbcfg.yaml
+      #- ./free5gc/config1/gnbcfg.yaml:/ueransim/gnb.yaml
+      #- ./free5gc/config1/gnb.sh:/ueransim/entrypoint.sh
+    cap_add:
+      - NET_ADMIN
+    # devices:
+    #   - /dev/net/tun
+    networks:
+      n123-terrestrial:
+        ipv4_address: 192.168.15.3
+      # pfcp:
+      #   ipv4_address: 192.168.5.5
+      # sbi:
+      #     ipv4_address: 192.168.0.15
+      # n123-ran-sat:
+      #   ipv4_address: 192.168.20.3
+      # satterminal-network:
+      #   ipv4_address: 192.168.30.4
+    depends_on:
+      - nrf
+      - amf
+      - upf
+      - smf
+      - pcf
+      - ausf
+  
+
+  ue:
+    container_name: ue
+    image: ue:master
+    #image: shynuu/sa-ntn:ue
+    #command: ./nr-ue -c ./uecfg.yaml
+    command: --config uecfg.yaml
+    #command: --config ue.yaml
+    volumes:
+      - ./free5gc/config1/uecfg.yaml:/ue/uecfg.yaml
+      # - ./free5gc/config1/uecfg.yaml:/ue/ue.yaml
+      # - /home/vagrant/nr-ntn/results:/ue/results
+      # - /home/vagrant/nr-ntn/exec_files/ue-app.sh:/ue/slice-0-app.sh
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    networks:
+      n123-terrestrial:
+        ipv4_address: 192.168.15.4
+      # n123-ran-sat:
+      #   ipv4_address: 192.168.20.5
+      # pfcp:
+      #   ipv4_address: 192.168.5.6
+      # sbi:
+      #     ipv4_address: 192.168.0.16
+    depends_on:
+      - gnb
+
+  # ueransim:
+  #   container_name: ueransim
+  #   image: free5gc/ueransim:latest
+  #   command: ./nr-gnb -c ./config/gnbcfg.yaml
+  #   volumes:
+  #     - ./free5gc/config/gnbcfg.yaml:/ueransim/config/gnbcfg.yaml
+  #     - ./free5gc/config/uecfg.yaml:/ueransim/config/uecfg.yaml
+  #   cap_add:
+  #     - NET_ADMIN
+  #   devices:
+  #     - "/dev/net/tun"
+  #   networks:
+  #     n3-interface:
+  #       ipv4_address: 192.168.20.3
+  #   depends_on:
+  #     - amf
+  #     - upf
+
+networks:
+  pfcp:
+    name: pfcp
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.5.0/24
+    driver_opts:
+      com.docker.network.bridge.name: pfcp-network
+  sbi:
+    name: sbi
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.0.0/24
+    driver_opts:
+      com.docker.network.bridge.name: sbi-network
+  n123-terrestrial:
+    name: n123-terrestrial
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.15.0/24
+    driver_opts:
+      com.docker.network.bridge.name: ter-network
+  # data-networkN6:
+  #   name: data-networkN6
+  #   driver: bridge
+  #   ipam:
+  #     driver: default
+  #     config:
+  #       - subnet: 192.168.10.0/24
+  #   driver_opts:
+  #     com.docker.network.bridge.name: dn-network
+  # n123-ran-sat:
+  #   name: n123-ran-sat
+  #   driver: bridge
+  #   ipam:
+  #     driver: default
+  #     config:
+  #       - subnet: 192.168.20.0/24
+  #   driver_opts:
+  #     com.docker.network.bridge.name: n123-ran-sat-network
+  # n123-core-sat:
+  #   name: n123-core-sat
+  #   driver: bridge
+  #   ipam:
+  #     driver: default
+  #     config:
+  #       - subnet: 192.168.40.0/24
+  #   driver_opts:
+  #     com.docker.network.bridge.name: n123-core-sat-network
+  # satterminal-network:
+  #   name: satterminal-network
+  #   driver: bridge
+  #   ipam:
+  #     driver: default
+  #     config:
+  #       - subnet: 192.168.30.0/24
+  #   driver_opts:
+  #     com.docker.network.bridge.name: satellite-terminal-network
+  # satgateway-network:
+  #   name: satgateway-network
+  #   driver: bridge
+  #   ipam:
+  #     driver: default
+  #     config:
+  #       - subnet: 192.168.35.0/24
+  #   driver_opts:
+  #     com.docker.network.bridge.name: satellite-gateway-network
+
+volumes:
+  dbdata:

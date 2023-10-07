@@ -1,0 +1,41 @@
+#sudo docker build -t amf:v3.1.1a -f Dockerfile .
+#sudo docker build -t amf:v3.1.1b -f Dockerfile . for sat scenario, entrypoint and cmd are commented
+#sudo docker build -t amf:v3.3.0 -f Dockerfile2 .
+#sudo docker build -t amf:v3.0.5 -f Dockerfile3 .
+FROM f5gc:baseamf2 AS amf-builder
+FROM ubuntu:focal
+
+LABEL description="Free5GC open source 5G Core Network" \
+    version="Stage 3"
+
+# RUN apt-get update \
+#     && apt-get install -qy vim strace net-tools curl netcat-openbsd
+
+# Set working dir
+WORKDIR /free5gc
+
+RUN apt-get update && DEBIAN_FRONTEND=non-interactive apt-get install -qy --no-install-recommends --no-install-suggests \
+    iproute2 tcpdump iputils-ping vim strace net-tools curl netcat-openbsd \
+    && rm -rf /var/lib/apt/lists/*
+
+#RUN mkdir -p config/ log/ config/TLS/
+
+# Copy executable and default certs
+# COPY --from=amf-builder /go/src/free5gc/bin/amf ./
+# COPY --from=amf-builder /go/src/free5gc/config/TLS/amf.pem ./config/TLS/
+# COPY --from=amf-builder /go/src/free5gc/config/TLS/amf.pem ./config/TLS/
+COPY --from=amf-builder /go/src/free5gc/bin/amf /usr/local/bin/amf
+COPY --from=amf-builder /go/src/free5gc/config/amfcfg.yaml ./
+
+# ENTRYPOINT ["amf"]
+
+# CMD ["-h"]
+
+# # Config files volume
+# VOLUME [ "/free5gc/config" ]
+
+# # Certificates (if not using default) volume
+# VOLUME [ "/free5gc/config/TLS" ]
+
+# # Exposed ports
+# EXPOSE 8000
