@@ -36,7 +36,7 @@ cd /home/vagrant/3D-NTN/build_images
 ```
 The deployed network topology is shown below below:
 
-<img src="./Figs/network-model.pdf" title="./Figs/network-model.pdf" width=500px></img>
+<img src="./Figs/network-model.pdf" title="./Figs/network-model.pdf" width=200px></img>
 
 ## Run experiments
 
