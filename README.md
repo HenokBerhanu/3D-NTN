@@ -1,14 +1,9 @@
 # 3D-NTN
-This repo is intended for deploying Resilient 5G Non-terrestrial 3D Network by using Free5GC as a 5G core, OpenSand as a satelite emulator, and UERANSIM as a radio access emulator. All the components are deployed in a docker-compose environment.
+This repo is intended for deploying a Resilient 5G Non-terrestrial 3D Network by using Free5GC as a 5G core, OpenSand as a satellite emulator, and UERANSIM as a radio access emulator. All the components are deployed in a docker-compose environment as docker containers.
 
-# comnetsemu_deploy_4g
-
-This project is intended for deploying a 4G network on comnetsemu emulator. 
-
-It is done using srsRAN and open5GS deployed on two different VMs. The two networks are connected using linux GRE tunnel.
-
-## EPC core
-Emulate a 4G network by building open5gs docker image in comnetsemu (open5gs VM). Private VM IP used 192.168.56.102
+## Free5GC core
+Emulate a 5G core network by building components in a distributed way with Service Based Interface (SBI) subnet 192.168.0.0/24.
+All the 5G core components can be built using the shell file # build_core.sh # in the directory # /home/vagrant/3D-NTN/build_images/build_core.sh #
 
 ## srsRAN 
 Build docker image for srsENB and srsUE in comnetsemu (srsRAN VM). Private VM IP used 192.168.56.101
