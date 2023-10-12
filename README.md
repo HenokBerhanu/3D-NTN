@@ -7,7 +7,8 @@ This repo is intended for deploying a Resilient 5G Non-terrestrial 3D Network by
 * For registering the user equipment into the MongoDB database, we used a container that registers UE directly into the database without using WebUI for simplicity.
 
 ## OpenSand emulator
-
+* The OpenSand satellite emulator consists of three components, **Satellite**, **Gateway**, and **Terminal**.
+* These components are built as a docker container from the directory, **/home/vagrant/3D-NTN/build_images/opensand-simulator/opensand**.
 
 ## UERANSIM 
 Is used to build docker images for gNB and UE. Running a shell file **build_ran.sh** in the directory **/home/vagrant/3D-NTN/build_images/build_ran.sh** will build the gNB and UE.
@@ -24,13 +25,18 @@ cd /home/vagrant/3D-NTN/build_images
 ./build_core.sh
 ```
 ```
+For OpenSand
+cd /home/vagrant/3D-NTN/build_images/opensand-simulator/opensand
+From this directory, all the components are built when running the docker-composeSat.yaml file.
+```
+```
 For UERANSIM
 cd /home/vagrant/3D-NTN/build_images
 ./build_ran.sh
 ```
-The network topology looks like below:
+The deployed network topology is shown below below:
 
-<img src="./figs/topology.png" title="./figs/topology.png" width=800px></img>
+<img src="./Figs/network-model.pdf" title="./Figs/network-model.pdf" width=200px></img>
 
 ## Run experiments
 
