@@ -6,13 +6,13 @@ docker build -t nrf:v3.1.1 -f Dockerfile .
 
 # Build amf
 cd /home/vagrant/3D-NTN/build_images/core/amf
-docker build -t amf:v3.1.1 -f Dockerfile .
+docker build -t amf:v3.1.1b -f Dockerfile .
 
 # Build smf
 cd /home/vagrant/3D-NTN/build_images/core/smf
-docker build -t smf:v3.1.1 -f Dockerfile .
+docker build -t smf:v3.1.1b -f Dockerfile .
 
-# Build upf
+# Build upfTer and upfMec
 cd /home/vagrant/3D-NTN/build_images/core/upf
 docker build -t upf:v3.1.1 -f Dockerfile .
 
@@ -37,21 +37,13 @@ cd /home/vagrant/3D-NTN/build_images/core/pcf
 docker build -t pcf:v3.1.1 -f Dockerfile .
 
 # Build n3wf
-cd /home/vagrant/3D-NTN/build_images/core/pcf
-docker build -t n3wf:v3.1.1 -f Dockerfile .
+# cd /home/vagrant/3D-NTN/build_images/core/n3iwf
+# docker build -t n3wf:v3.1.1 -f Dockerfile .
 
 # Build webui
-cd /home/vagrant/3D-NTN/build_images/core/pcf
-docker build -t webui:v3.1.1 -f Dockerfile .
+# cd /home/vagrant/3D-NTN/build_images/core/webui
+# docker build -t webui:v3.1.1 -f Dockerfile .
 
-# # Build Image 11
-# cd /home/vagrant/3D-NTN/build_images/dockerfiles/main/populate
-# docker build -t nrntn:populate -f Dockerfile .
-
-# # Build Image 14
-# cd /home/vagrant/3D-NTN/build_images/dockerfiles/main/gnb
-# docker build -t nrntn:gnb -f Dockerfile .
-
-# # Build Image 15
-# cd /home/vagrant/3D-NTN/build_images/dockerfiles/main/ue
-# docker build -t nrntn:ue -f Dockerfile .
+# Build Image 11
+cd /home/vagrant/3D-NTN/build_images/core/regirsterue
+docker build -t uereg:latest -f Dockerfile .
