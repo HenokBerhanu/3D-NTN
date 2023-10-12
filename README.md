@@ -2,9 +2,9 @@
 This repo is intended for deploying a Resilient 5G Non-terrestrial 3D Network by using Free5GC as a 5G core, OpenSand as a satellite emulator, and UERANSIM as a radio access emulator. All the components are deployed in a docker-compose environment as docker containers.
 
 ## Free5GC core
-Emulate a 5G core network by building components in a distributed way with Service Based Interface (SBI) subnet 192.168.0.0/24.
-All the 5G core components can be built executing the shell file **build_core.sh** in the directory **/home/vagrant/3D-NTN/build_images/build_core.sh**. 
-For registering the user equipment into the MongoDB database, we used a container that registers UE directly into the database without using WebUI for simplicity.
+* Emulate a 5G core network by building components in a distributed way with Service Based Interface (SBI) subnet 192.168.0.0/24.
+* All the 5G core components can be built executing the shell file **build_core.sh** in the directory **/home/vagrant/3D-NTN/build_images/build_core.sh**. 
+*For registering the user equipment into the MongoDB database, we used a container that registers UE directly into the database without using WebUI for simplicity.
 
 ## OpenSand emulator
 
