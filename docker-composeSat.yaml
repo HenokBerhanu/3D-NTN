@@ -62,42 +62,42 @@ services:
       - amf
       - nrf
   
-  upfMec:
-    container_name: upfMec
-    image: upf:v3.1.1
-    command: bash ./upf-iptables.sh
-    volumes:
-      - ./configs/integrated/configsat/upfcfgmec.yaml:/free5gc/upfcfg.yaml
-      - ./configs/integrated/configsat/upf-iptablesmec.sh:/free5gc/upf-iptables.sh
-    cap_add:
-      - NET_ADMIN
-    networks:
-      satterminal-network:
-        ipv4_address: 192.168.30.4 
-      pfcp:
-        ipv4_address: 192.168.5.5
-      # pfcp:
-      #   ipv4_address: 192.168.5.4 #eth1
-      # n123-terrestrial:
-      #   ipv4_address: 192.168.15.4 #eth0
-      # data-networkN6:
-      #   ipv4_address: 192.168.10.3
-  
-  # upfTer:
-  #   container_name: upfTer
+  # upfMec:
+  #   container_name: upfMec
   #   image: upf:v3.1.1
   #   command: bash ./upf-iptables.sh
-  #   #command: bash -c "./upf-iptables.sh && ./free5gc-upfd -c ./upfcfg.yaml"
   #   volumes:
-  #     - ./configs/integrated/configsat/upfcfgter.yaml:/free5gc/upfcfg.yaml
-  #     - ./configs/integrated/configsat/upf-iptablester.sh:/free5gc/upf-iptables.sh
+  #     - ./configs/integrated/configsat/upfcfgmec.yaml:/free5gc/upfcfg.yaml
+  #     - ./configs/integrated/configsat/upf-iptablesmec.sh:/free5gc/upf-iptables.sh
   #   cap_add:
   #     - NET_ADMIN
   #   networks:
+  #     satterminal-network:
+  #       ipv4_address: 192.168.30.4 
   #     pfcp:
-  #       ipv4_address: 192.168.5.4 #eth1
-  #     n123-terrestrial:
-  #       ipv4_address: 192.168.15.4 #eth0
+  #       ipv4_address: 192.168.5.5
+  #     # pfcp:
+  #     #   ipv4_address: 192.168.5.4 #eth1
+  #     # n123-terrestrial:
+  #     #   ipv4_address: 192.168.15.4 #eth0
+  #     # data-networkN6:
+  #     #   ipv4_address: 192.168.10.3
+  
+  upfTer:
+    container_name: upfTer
+    image: upf:v3.1.1
+    command: bash ./upf-iptables.sh
+    #command: bash -c "./upf-iptables.sh && ./free5gc-upfd -c ./upfcfg.yaml"
+    volumes:
+      - ./configs/integrated/configsat/upfcfgter.yaml:/free5gc/upfcfg.yaml
+      - ./configs/integrated/configsat/upf-iptablester.sh:/free5gc/upf-iptables.sh
+    cap_add:
+      - NET_ADMIN
+    networks:
+      pfcp:
+        ipv4_address: 192.168.5.4 #eth1
+      n123-terrestrial:
+        ipv4_address: 192.168.15.4 #eth0
 
   smf:
     container_name: smf
@@ -117,8 +117,8 @@ services:
         ipv4_address: 192.168.5.3
     depends_on:
       - nrf
-      #- upfTer
-      - upfMec
+      - upfTer
+      # - upfMec
 
   ausf:
     container_name: ausf
@@ -192,185 +192,185 @@ services:
     depends_on:
       - nrf
 
-  gnbSat:
-    container_name: gnbSat
-    image: gnb:masterb
-    entrypoint: bash ./entrypoint.sh
-    volumes:
-      - ./configs/integrated/configsat/gnbcfgsat.yaml:/gnb/gnbcfg.yaml
-      - ./configs/integrated/configsat/gnb.sh:/gnb/entrypoint.sh
-    cap_add:
-      - NET_ADMIN
-    networks:
-      n123-terrestrial:
-        ipv4_address: 192.168.15.7
-      satgateway-network:
-        ipv4_address: 192.168.35.3 #172.22.0.4
-      # satgnb-network:
-      #   ipv4_address: 192.168.40.3
-    depends_on:
-      - nrf
-      - amf
-      - upfMec
-      - smf
-      - pcf
-      - ausf
-      - gateway
-      - satellite
-      - terminal
-  
-  # gnbTer:
-  #   container_name: gnbTer
-  #   image: gnb:master
-  #   command: --config gnbcfg.yaml
-  #   #entrypoint: bash ./entrypoint.sh
+  # gnbSat:
+  #   container_name: gnbSat
+  #   image: gnb:masterb
+  #   entrypoint: bash ./entrypoint.sh
   #   volumes:
-  #     - ./configs/integrated/configsat/gnbcfgter.yaml:/gnb/gnbcfg.yaml
+  #     - ./configs/integrated/configsat/gnbcfgsat.yaml:/gnb/gnbcfg.yaml
+  #     - ./configs/integrated/configsat/gnb.sh:/gnb/entrypoint.sh
   #   cap_add:
   #     - NET_ADMIN
   #   networks:
   #     n123-terrestrial:
-  #       ipv4_address: 192.168.15.3
+  #       ipv4_address: 192.168.15.7
+  #     satgateway-network:
+  #       ipv4_address: 192.168.35.3 #172.22.0.4
+  #     # satgnb-network:
+  #     #   ipv4_address: 192.168.40.3
   #   depends_on:
   #     - nrf
   #     - amf
-  #     - upfTer
+  #     - upfMec
   #     - smf
   #     - pcf
   #     - ausf
+  #     - gateway
+  #     - satellite
+  #     - terminal
   
-  gateway:
-    container_name: ${GW_CONTAINER_NAME:-gateway}
-    build: /home/vagrant/3D-NTN/build_images/opensand-simulator/opensand/gateway/
-    entrypoint: ./opensand_config/entrypoint.sh
-    ports:
-      - "3141"
-      - "5358"
-      - "5926"
+  gnbTer:
+    container_name: gnbTer
+    image: gnb:master
+    command: --config gnbcfg.yaml
+    #entrypoint: bash ./entrypoint.sh
     volumes:
-      - /home/vagrant/3D-NTN/build_images/opensand-simulator/opensand/gateway/config:/opensand_config
-      - /home/vagrant/3D-NTN/build_images/opensand-simulator/opensand/src/:/root/go/src
-    networks:
-      satgateway-network:
-        ipv4_address: 192.168.35.4 #172.22.0.3
-      # pfcp:
-      #   ipv4_address: 192.168.5.5
-      emulation: #sat:
-        ipv4_address: ${EMU_NETWORK_HEAD:-172.20}.0.3 #172.20.0.3 192.168.40.4
-        priority: 900
-      gwlan:
-        ipv4_address: "${GW_NETWORK_HEAD:-172.22}.0.3"
-        priority: 1000
-        ipv6_address: ${GW_IP6_HEAD:-2001:660}:6602:142:0:0:1:1
-    privileged: true
+      - ./configs/integrated/configsat/gnbcfgter.yaml:/gnb/gnbcfg.yaml
     cap_add:
-      - ALL
       - NET_ADMIN
-    devices:
-      - /dev/net/tun
-    sysctls:
-      - net.ipv6.conf.all.disable_ipv6=0
-    environment:
-      GOPATH: /root/go
-      GIN_MODE: release
-
-  satellite:
-    container_name: ${SAT_CONTAINER_NAME:-satellite}
-    build: /home/vagrant/3D-NTN/build_images/opensand-simulator/opensand/satellite/
-    entrypoint: ./opensand_config/entrypoint.sh
-    ports:
-      - "3141"
-      - "5358"
-      - "5926"
-      - "${SAT_PORT_NUMBER:-5656}:5656"
-    volumes:
-      - /home/vagrant/3D-NTN/build_images/opensand-simulator/opensand/satellite/config:/opensand_config
-      - /home/vagrant/3D-NTN/build_images/opensand-simulator/opensand/satellite/attenuation_scenario:/attenuation_scenario
-      - /home/vagrant/3D-NTN/build_images/opensand-simulator/opensand/satellite/delay_scenario:/delay_scenario
-      - /tmp/.X11-unix:/tmp/.X11-unix:rw
     networks:
-      emulation:
-        ipv4_address: ${EMU_NETWORK_HEAD:-172.20}.0.2 #192.168.40.3
-      # satgnb-network:
-      #   ipv4_address: 192.168.40.4
-    privileged: true
-    environment:
-      DISPLAY: :1
-      GIN_MODE: release
+      n123-terrestrial:
+        ipv4_address: 192.168.15.3
     depends_on:
-      - "gateway"
-      - "terminal"
+      - nrf
+      - amf
+      - upfTer
+      - smf
+      - pcf
+      - ausf
+  
+  # gateway:
+  #   container_name: ${GW_CONTAINER_NAME:-gateway}
+  #   build: /home/vagrant/3D-NTN/build_images/opensand-simulator/opensand/gateway/
+  #   entrypoint: ./opensand_config/entrypoint.sh
+  #   ports:
+  #     - "3141"
+  #     - "5358"
+  #     - "5926"
+  #   volumes:
+  #     - /home/vagrant/3D-NTN/build_images/opensand-simulator/opensand/gateway/config:/opensand_config
+  #     - /home/vagrant/3D-NTN/build_images/opensand-simulator/opensand/src/:/root/go/src
+  #   networks:
+  #     satgateway-network:
+  #       ipv4_address: 192.168.35.4 #172.22.0.3
+  #     # pfcp:
+  #     #   ipv4_address: 192.168.5.5
+  #     emulation: #sat:
+  #       ipv4_address: ${EMU_NETWORK_HEAD:-172.20}.0.3 #172.20.0.3 192.168.40.4
+  #       priority: 900
+  #     gwlan:
+  #       ipv4_address: "${GW_NETWORK_HEAD:-172.22}.0.3"
+  #       priority: 1000
+  #       ipv6_address: ${GW_IP6_HEAD:-2001:660}:6602:142:0:0:1:1
+  #   privileged: true
+  #   cap_add:
+  #     - ALL
+  #     - NET_ADMIN
+  #   devices:
+  #     - /dev/net/tun
+  #   sysctls:
+  #     - net.ipv6.conf.all.disable_ipv6=0
+  #   environment:
+  #     GOPATH: /root/go
+  #     GIN_MODE: release
 
-  terminal:
-    container_name: ${ST_CONTAINER_NAME:-terminal}
-    build: /home/vagrant/3D-NTN/build_images/opensand-simulator/opensand/terminal/
-    entrypoint: ./opensand_config/entrypoint.sh
-    ports:
-      - "3141"
-      - "5358"
-      - "5926"
+  # satellite:
+  #   container_name: ${SAT_CONTAINER_NAME:-satellite}
+  #   build: /home/vagrant/3D-NTN/build_images/opensand-simulator/opensand/satellite/
+  #   entrypoint: ./opensand_config/entrypoint.sh
+  #   ports:
+  #     - "3141"
+  #     - "5358"
+  #     - "5926"
+  #     - "${SAT_PORT_NUMBER:-5656}:5656"
+  #   volumes:
+  #     - /home/vagrant/3D-NTN/build_images/opensand-simulator/opensand/satellite/config:/opensand_config
+  #     - /home/vagrant/3D-NTN/build_images/opensand-simulator/opensand/satellite/attenuation_scenario:/attenuation_scenario
+  #     - /home/vagrant/3D-NTN/build_images/opensand-simulator/opensand/satellite/delay_scenario:/delay_scenario
+  #     - /tmp/.X11-unix:/tmp/.X11-unix:rw
+  #   networks:
+  #     emulation:
+  #       ipv4_address: ${EMU_NETWORK_HEAD:-172.20}.0.2 #192.168.40.3
+  #     # satgnb-network:
+  #     #   ipv4_address: 192.168.40.4
+  #   privileged: true
+  #   environment:
+  #     DISPLAY: :1
+  #     GIN_MODE: release
+  #   depends_on:
+  #     - "gateway"
+  #     - "terminal"
+
+  # terminal:
+  #   container_name: ${ST_CONTAINER_NAME:-terminal}
+  #   build: /home/vagrant/3D-NTN/build_images/opensand-simulator/opensand/terminal/
+  #   entrypoint: ./opensand_config/entrypoint.sh
+  #   ports:
+  #     - "3141"
+  #     - "5358"
+  #     - "5926"
+  #   volumes:
+  #     - /home/vagrant/3D-NTN/build_images/opensand-simulator/opensand/terminal/config:/opensand_config
+  #     - /home/vagrant/3D-NTN/build_images/opensand-simulator/opensand/src/:/root/go/src
+  #   environment:
+  #     GOPATH: /root/go
+  #     GIN_MODE: release
+  #   networks:
+  #     satterminal-network:
+  #       ipv4_address: 192.168.30.3 #172.21.0.4
+  #     emulation:
+  #       ipv4_address: ${EMU_NETWORK_HEAD:-172.20}.0.4 #192.168.40.5
+  #       priority: 900
+  #     stlan:
+  #       ipv4_address: "${ST_NETWORK_HEAD:-172.21}.0.4"
+  #       priority: 1000
+  #       ipv6_address: ${ST_IP6_HEAD:-2001:661}:6602:142:0:0:1:2
+  #   privileged: true
+  #   cap_add:
+  #     - ALL
+  #     - NET_ADMIN
+  #   devices:
+  #     - /dev/net/tun
+  #   sysctls:
+  #     - net.ipv6.conf.all.disable_ipv6=0
+
+  ueter:
+    container_name: ueter
+    image: ue:masterb
+    entrypoint: bash ./entrypoint.sh
     volumes:
-      - /home/vagrant/3D-NTN/build_images/opensand-simulator/opensand/terminal/config:/opensand_config
-      - /home/vagrant/3D-NTN/build_images/opensand-simulator/opensand/src/:/root/go/src
-    environment:
-      GOPATH: /root/go
-      GIN_MODE: release
-    networks:
-      satterminal-network:
-        ipv4_address: 192.168.30.3 #172.21.0.4
-      emulation:
-        ipv4_address: ${EMU_NETWORK_HEAD:-172.20}.0.4 #192.168.40.5
-        priority: 900
-      stlan:
-        ipv4_address: "${ST_NETWORK_HEAD:-172.21}.0.4"
-        priority: 1000
-        ipv6_address: ${ST_IP6_HEAD:-2001:661}:6602:142:0:0:1:2
-    privileged: true
+      - ./configs/integrated/configsat/uecfgter.yaml:/ue/uecfg.yaml
+      - ./configs/integrated/configsat/ueter.sh:/ue/entrypoint.sh
     cap_add:
-      - ALL
       - NET_ADMIN
     devices:
       - /dev/net/tun
-    sysctls:
-      - net.ipv6.conf.all.disable_ipv6=0
-
-  # ueter:
-  #   container_name: ueter
+    networks:
+      n123-terrestrial:
+        ipv4_address: 192.168.15.6
+      # satterminal-network:
+      #   ipv4_address: 192.168.30.5 #172.21.0.5
+    depends_on:
+      - gnbTer
+  
+  # uesat:
+  #   container_name: uesat
   #   image: ue:masterb
   #   entrypoint: bash ./entrypoint.sh
   #   volumes:
-  #     - ./configs/integrated/configsat/uecfgter.yaml:/ue/uecfg.yaml
-  #     - ./configs/integrated/configsat/ueter.sh:/ue/entrypoint.sh
+  #     - ./configs/integrated/configsat/uecfgsat.yaml:/ue/uecfg.yaml
+  #     - ./configs/integrated/configsat/uesat.sh:/ue/entrypoint.sh
   #   cap_add:
   #     - NET_ADMIN
   #   devices:
   #     - /dev/net/tun
   #   networks:
+  #     satterminal-network:
+  #       ipv4_address: 192.168.30.5 #172.21.0.5
   #     n123-terrestrial:
-  #       ipv4_address: 192.168.15.6
-  #     # satterminal-network:
-  #     #   ipv4_address: 192.168.30.5 #172.21.0.5
+  #       ipv4_address: 192.168.15.8
   #   depends_on:
-  #     - gnbTer
-  
-  uesat:
-    container_name: uesat
-    image: ue:masterb
-    entrypoint: bash ./entrypoint.sh
-    volumes:
-      - ./configs/integrated/configsat/uecfgsat.yaml:/ue/uecfg.yaml
-      - ./configs/integrated/configsat/uesat.sh:/ue/entrypoint.sh
-    cap_add:
-      - NET_ADMIN
-    devices:
-      - /dev/net/tun
-    networks:
-      satterminal-network:
-        ipv4_address: 192.168.30.5 #172.21.0.5
-      n123-terrestrial:
-        ipv4_address: 192.168.15.8
-    depends_on:
-      - terminal
+  #     - terminal
 
 networks:
   pfcp:

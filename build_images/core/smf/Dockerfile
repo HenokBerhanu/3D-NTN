@@ -6,8 +6,8 @@ FROM ubuntu:focal
 LABEL description="Free5GC open source 5G Core Network" \
     version="Stage 3"
 
-# RUN apt-get update \
-#     && apt-get install -qy vim strace net-tools curl netcat-openbsd
+RUN apt-get update \
+    && apt-get install -qy vim strace net-tools curl netcat-openbsd iproute2
 
 # Set working dir
 WORKDIR /free5gc

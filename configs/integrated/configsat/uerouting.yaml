@@ -3,24 +3,24 @@ info:
   description: Routing information for UE
 
 ueRoutingInfo: # the list of UE routing information
-  # UE1: # Group Name
-  #   members:
-  #   - imsi-208930000000001 # Subscription Permanent Identifier of the UE
-  #   topology: # Network topology for this group (Uplink: A->B, Downlink: B->A)
-  #   # default path derived from this topology
-  #   # node name should be consistent with smfcfg.yaml
-  #     - A: gNBter
-  #       B: UPFter
-  #   # specificPath:
-  #   #   - dest: 10.60.0.0/16 # the destination IP address on Data Network (DN)
-  #   #     # the order of UPF nodes in this path. We use the UPF's name to represent each UPF node.
-  #   #     # The UPF's name should be consistent with smfcfg.yaml
-  #   #     path: [BranchingUPF, AnchorUPF2]
-  UE2: # Group Name
+  UE1: # Group Name
     members:
-    - imsi-208930000000002 # Subscription Permanent Identifier of the UE
+    - imsi-208930000000001 # Subscription Permanent Identifier of the UE
     topology: # Network topology for this group (Uplink: A->B, Downlink: B->A)
     # default path derived from this topology
     # node name should be consistent with smfcfg.yaml
-      - A: gNBsat
-        B: UPFmec
+      - A: gNBter
+        B: UPFter
+    # specificPath:
+    #   - dest: 10.60.0.0/16 # the destination IP address on Data Network (DN)
+    #     # the order of UPF nodes in this path. We use the UPF's name to represent each UPF node.
+    #     # The UPF's name should be consistent with smfcfg.yaml
+    #     path: [BranchingUPF, AnchorUPF2]
+  # UE2: # Group Name
+  #   members:
+  #   - imsi-208930000000002 # Subscription Permanent Identifier of the UE
+  #   topology: # Network topology for this group (Uplink: A->B, Downlink: B->A)
+  #   # default path derived from this topology
+  #   # node name should be consistent with smfcfg.yaml
+  #     - A: gNBsat
+  #       B: UPFmec

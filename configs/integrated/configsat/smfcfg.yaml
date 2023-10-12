@@ -17,20 +17,20 @@ configuration:
     - nsmf-event-exposure # Nsmf_EventExposure service
     - nsmf-oam # OAM service
   snssaiInfos: # the S-NSSAI (Single Network Slice Selection Assistance Information) list supported by this AMF
-    # - sNssai: # S-NSSAI (Single Network Slice Selection Assistance Information)
-    #     sst: 1 # Slice/Service Type (uinteger, range: 0~255)
-    #     sd: 010203 # Slice Differentiator (3 bytes hex string, range: 000000~FFFFFF)
-    #   dnnInfos: # DNN information list
-    #     - dnn: internetter # Data Network Name
-    #       dns: # the IP address of DNS
-    #         ipv4: 8.8.8.8
     - sNssai: # S-NSSAI (Single Network Slice Selection Assistance Information)
         sst: 1 # Slice/Service Type (uinteger, range: 0~255)
-        sd: 112233 # Slice Differentiator (3 bytes hex string, range: 000000~FFFFFF)
+        sd: 010203 # Slice Differentiator (3 bytes hex string, range: 000000~FFFFFF)
       dnnInfos: # DNN information list
-        - dnn: internetsat # Data Network Name
+        - dnn: internetter # Data Network Name
           dns: # the IP address of DNS
-            ipv4: 8.8.4.4
+            ipv4: 8.8.8.8
+    # - sNssai: # S-NSSAI (Single Network Slice Selection Assistance Information)
+    #     sst: 1 # Slice/Service Type (uinteger, range: 0~255)
+    #     sd: 112233 # Slice Differentiator (3 bytes hex string, range: 000000~FFFFFF)
+    #   dnnInfos: # DNN information list
+    #     - dnn: internetsat # Data Network Name
+    #       dns: # the IP address of DNS
+    #         ipv4: 8.8.4.4
   plmnList: # the list of PLMN IDs that this SMF belongs to (optional, remove this key when unnecessary)
     - mcc: "208" # Mobile Country Code (3 digits string, digit: 0~9)
       mnc: "93" # Mobile Network Code (2 or 3 digits string, digit: 0~9)
@@ -39,49 +39,49 @@ configuration:
     addr: 192.168.5.3
   userplaneInformation: # list of userplane information
     upNodes: # information of userplane node (AN or UPF)
-      # gNBter: # the name of the node
-      #   type: AN # the type of the node (AN or UPF)
-      #   an_ip: 192.168.15.3
-      # UPFter:  # the name of the node
-      #   type: UPF # the type of the node (AN or UPF)
-      #   nodeID: 192.168.5.4 # the IP/FQDN of N4 interface on this UPF (PFCP)
-      #   sNssaiUpfInfos: # S-NSSAI information list for this UPF
-      #     - sNssai: # S-NSSAI (Single Network Slice Selection Assistance Information)
-      #         sst: 1 # Slice/Service Type (uinteger, range: 0~255)
-      #         sd: 010203 # Slice Differentiator (3 bytes hex string, range: 000000~FFFFFF)
-      #       dnnUpfInfoList: # DNN information list for this S-NSSAI
-      #         - dnn: internetter
-      #           pools:
-      #             - cidr: 10.60.0.0/16
-      #   interfaces: # Interface list for this UPF
-      #     - interfaceType: N3 # the type of the interface (N3 or N9)
-      #       endpoints: # the IP address of this N3/N9 interface on this UPF
-      #         - 192.168.15.4 #192.168.20.4
-      #       networkInstance: internetter # Data Network Name (DNN)
-      gNBsat: # the name of the node
+      gNBter: # the name of the node
         type: AN # the type of the node (AN or UPF)
-        #an_ip: 192.168.15.7
-      UPFmec:  # the name of the node
+        #an_ip: 192.168.15.3
+      UPFter:  # the name of the node
         type: UPF # the type of the node (AN or UPF)
-        nodeID: 192.168.5.5 #192.168.5.4 the IP/FQDN of N4 interface on this UPF (PFCP)
+        nodeID: 192.168.5.4 # the IP/FQDN of N4 interface on this UPF (PFCP)
         sNssaiUpfInfos: # S-NSSAI information list for this UPF
           - sNssai: # S-NSSAI (Single Network Slice Selection Assistance Information)
               sst: 1 # Slice/Service Type (uinteger, range: 0~255)
-              sd: 112233 # Slice Differentiator (3 bytes hex string, range: 000000~FFFFFF)
+              sd: 010203 # Slice Differentiator (3 bytes hex string, range: 000000~FFFFFF)
             dnnUpfInfoList: # DNN information list for this S-NSSAI
-              - dnn: internetsat
+              - dnn: internetter
                 pools:
-                  - cidr: 10.62.0.0/16
+                  - cidr: 10.60.0.0/16
         interfaces: # Interface list for this UPF
           - interfaceType: N3 # the type of the interface (N3 or N9)
             endpoints: # the IP address of this N3/N9 interface on this UPF
-              - 192.168.30.4 #192.168.15.4 192.168.20.4
-            networkInstance: internetsat # Data Network Name (DNN)
+              - 192.168.15.4 #192.168.20.4
+            networkInstance: internetter # Data Network Name (DNN)
+      # gNBsat: # the name of the node
+      #   type: AN # the type of the node (AN or UPF)
+      #   #an_ip: 192.168.15.7
+      # UPFmec:  # the name of the node
+      #   type: UPF # the type of the node (AN or UPF)
+      #   nodeID: 192.168.5.5 #192.168.5.4 the IP/FQDN of N4 interface on this UPF (PFCP)
+      #   sNssaiUpfInfos: # S-NSSAI information list for this UPF
+      #     - sNssai: # S-NSSAI (Single Network Slice Selection Assistance Information)
+      #         sst: 1 # Slice/Service Type (uinteger, range: 0~255)
+      #         sd: 112233 # Slice Differentiator (3 bytes hex string, range: 000000~FFFFFF)
+      #       dnnUpfInfoList: # DNN information list for this S-NSSAI
+      #         - dnn: internetsat
+      #           pools:
+      #             - cidr: 10.62.0.0/16
+      #   interfaces: # Interface list for this UPF
+      #     - interfaceType: N3 # the type of the interface (N3 or N9)
+      #       endpoints: # the IP address of this N3/N9 interface on this UPF
+      #         - 192.168.30.4 #192.168.15.4 192.168.20.4
+      #       networkInstance: internetsat # Data Network Name (DNN)
     links: # the topology graph of userplane, A and B represent the two nodes of each link
-      # - A: gNBter
-      #   B: UPFter
-      - A: gNBsat
-        B: UPFmec
+      - A: gNBter
+        B: UPFter
+      # - A: gNBsat
+      #   B: UPFmec
   nrfUri: http://192.168.0.4:8000 # a valid URI of NRF
 
 # the kind of log output
