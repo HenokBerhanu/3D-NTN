@@ -6,23 +6,27 @@ Emulate a 5G core network by building components in a distributed way with Servi
 All the 5G core components can be built executing the shell file **build_core.sh** in the directory **/home/vagrant/3D-NTN/build_images/build_core.sh**. 
 For registering the user equipment into the MongoDB database, we used a container that registers UE directly into the database without using WebUI for simplicity.
 
+## OpenSand emulator
+
+
 ## UERANSIM 
 Is used to build docker images for gNB and UE. Running a shell file **build_ran.sh** in the directory **/home/vagrant/3D-NTN/build_images/build_ran.sh** will build the gNB and UE.
+
 ## Instructions
 
-Clone repository in the comnetsemu VM.
+Clone repository in an environment where docker and docker-compose are pre-installed.
 
 Build the docker images:
 
 ```
-For EPC core
-cd build
-./buildo5gs.sh
+For 5G core
+cd /home/vagrant/3D-NTN/build_images
+./build_core.sh
 ```
 ```
-For srsRAN
-cd build
-./srsbuild3.sh
+For UERANSIM
+cd /home/vagrant/3D-NTN/build_images
+./build_ran.sh
 ```
 The network topology looks like below:
 
