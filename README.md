@@ -4,7 +4,7 @@ This repo is intended for deploying a Resilient 5G Non-terrestrial 3D Network by
 ## Free5GC core
 * Emulate a 5G core network by building components in a distributed way with Service Based Interface (SBI) subnet 192.168.0.0/24.
 * All the 5G core components can be built executing the shell file **build_core.sh** in the directory **/home/vagrant/3D-NTN/build_images/build_core.sh**. 
-*For registering the user equipment into the MongoDB database, we used a container that registers UE directly into the database without using WebUI for simplicity.
+* For registering the user equipment into the MongoDB database, we used a container that registers UE directly into the database without using WebUI for simplicity.
 
 ## OpenSand emulator
 
