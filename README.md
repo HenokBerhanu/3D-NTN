@@ -3,7 +3,7 @@ This repo is intended for deploying a Resilient 5G Non-terrestrial 3D Network by
 
 ## Free5GC core
 Emulate a 5G core network by building components in a distributed way with Service Based Interface (SBI) subnet 192.168.0.0/24.
-All the 5G core components can be built using the shell file # build_core.sh # in the directory # /home/vagrant/3D-NTN/build_images/build_core.sh #
+All the 5G core components can be built using the shell file "build_core.sh" in the directory "/home/vagrant/3D-NTN/build_images/build_core.sh"
 
 ## srsRAN 
 Build docker image for srsENB and srsUE in comnetsemu (srsRAN VM). Private VM IP used 192.168.56.101
