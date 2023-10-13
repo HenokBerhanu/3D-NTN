@@ -46,6 +46,11 @@ The deployed network topology is shown below below:
 
 * As the figure above shows, two networks are linked together, namely the terrestrial and the satellite network.
 * The **docker-composeTer.yaml** file consists of the terrestrial connection. While the **docker-composeSat.yaml** comprised both the satellite and terrestrial networks.
-* For the experimnet, we can use the **docker-composeSat.yaml** file with few rearrangements.  
+* For the experimnet, we can use the **docker-composeSat.yaml** file with few rearrangements.
+* To run the terrestrial network, disable the satellite network components by commenting the following containers, **upfMec** (UPF attached to the satellite terminal), **gnbSat** (Satellite connected gNB), **gateway**, **satellite**, **terminal**, and **uesat**
+* The after doing the above step, running the **docker-composeSat.yaml** file will result the following containers to function:
+
+<img src="./Figs/ter.png" title="./Figs/ter.png" width=800px></img>
+  
 
 
