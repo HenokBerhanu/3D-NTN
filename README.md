@@ -44,6 +44,8 @@ The deployed network topology is shown below below:
 
 ### Run experiments
 
-* To install 
+* As the figure above shows, two networks are linked together, namely the terrestrial and the satellite network.
+* The **docker-composeTer.yaml** file consists of the terrestrial connection. While the **docker-composeSat.yaml** comprised both the satellite and terrestrial networks.
+* For the experimnet, we can use the **docker-composeSat.yaml** file with few rearrangements.  
 
 
