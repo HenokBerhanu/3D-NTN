@@ -38,6 +38,12 @@ The deployed network topology is shown below below:
 
 <img src="./Figs/network-model.png" title="./Figs/network-model.png" width=800px></img>
 
+## Before executing the network after building the images,
+* Install GTP5G for the Free5GC UPF to enable the GPRS Tunnelling for a 5G-based network. Run the file **./installgtp5g.sh**
+* Install Docker and docker-compose
+
 ## Run experiments
+
+* To install 
 
 
